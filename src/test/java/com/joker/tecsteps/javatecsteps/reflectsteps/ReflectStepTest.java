@@ -13,7 +13,18 @@ public class ReflectStepTest {
     @Test
     public  void testReflectStep(){
         try{
-            Class step = Class.forName("com.joker.tecsteps.javatecsteps.reflectsteps.ReflectStep");
+            // 通配符　代表不知道具体的类型　是java泛型的一部分
+            // ? extends classA 代表classA的某个子类
+            Class<?> step = Class.forName("com.joker.tecsteps.javatecsteps.reflectsteps.ReflectStep");
+
+            /**
+            step.isAnonymousClass(); //是否是匿名内部类
+            step.isInterface();　// 是否是一个接口
+            step.isMemberClass();//是否是内部类
+             step.isEnum(); //　是否是枚举
+             Class.isAssignableFrom(Class class1); Class 是否跟class1一样或者是它的超类或借口
+             */
+
             System.out.println("----print constructor begin ----");
             for (Constructor constructor : step.getConstructors()){
                 System.out.println(constructor.toString());
@@ -54,6 +65,8 @@ public class ReflectStepTest {
             Method method = step.getDeclaredMethod("printTag");
             method.setAccessible(true);
             method.invoke(instance);
+            method.getModifiers();// 获取方法的关键字　public abstract synchorized等
+            method.getParameterTypes(); // 参数类型列表
             /**
              * 访问私有成员变量　判断变量的值
              * 更改私有成员变量
