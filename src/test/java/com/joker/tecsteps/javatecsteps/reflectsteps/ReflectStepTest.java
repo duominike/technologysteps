@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 
 /**
  * Created by liwenle on 17-2-20.
@@ -19,7 +19,7 @@ public class ReflectStepTest {
         if(bigCount < 10000){
             result = String.valueOf(bigCount);
         }else if(bigCount < 99990000){
-            SimpleDateFormat format = new SimpleDateFormat("0.0f");
+            DecimalFormat format = new DecimalFormat("#.0");
             float  calc = (bigCount * 0.01f /10000) * 100;
             result = format.format(calc) + "w";
         }else {
