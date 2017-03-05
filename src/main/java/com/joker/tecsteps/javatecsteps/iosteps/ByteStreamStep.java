@@ -10,14 +10,23 @@ public class ByteStreamStep {
         FileOutputStream outputStream = null;
         int numRead = 0;
         try {
-            inputStream = new FileInputStream(new File("~/bin/java_tec_test/char_stream.png"));
-            outputStream = new FileOutputStream(new File("~/bin/java_tec_test/char_stream_copy.png"));
+            File srcfile = new File("/home/joker/bin/java_tec_test/char_stream.jpg");
+            if(!srcfile.exists()){
+                srcfile.createNewFile();
+            }
+
+            File dstFile = new File("/home/joker/bin/java_tec_test/char_stream_copy.jpg");
+            if(!dstFile.exists()){
+                dstFile.createNewFile();
+            }
+            inputStream = new FileInputStream(srcfile);
+            outputStream = new FileOutputStream(dstFile);
             byte[] buffer = new byte[1024];
             while ((numRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, numRead);
             }
-        } catch (IOException e) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             try {
                 inputStream.close();
@@ -32,11 +41,14 @@ public class ByteStreamStep {
         ObjectInputStream objectInputStream = null;
         ObjectOutputStream objectOutputStream = null;
         try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(
-                    new File("~/bin/java_tec_test/persons.txt")));
+            File dstFile = new File("/home/joker/bin/java_tec_test/persons.txt");
+            if(!dstFile.exists()){
+                dstFile.createNewFile();
+            }
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(dstFile));
             objectOutputStream.writeObject(new Person("jimmy", 25));
             objectOutputStream.writeObject(new Person("tonny", 8));
-            objectInputStream = new ObjectInputStream(new FileInputStream("~/bin/java_tec_test/persons.txt"));
+            objectInputStream = new ObjectInputStream(new FileInputStream("/home/joker/bin/java_tec_test/persons.txt"));
             for (int i = 0; i < 2; i++) {
                 System.out.println(objectInputStream.readObject());
             }
@@ -60,14 +72,14 @@ public class ByteStreamStep {
         DataInputStream inputStream = null;
         DataOutputStream outputStream = null;
         try {
-            outputStream = new DataOutputStream(new FileOutputStream("~/bin/java_tec_test/datastream.txt"));
+            outputStream = new DataOutputStream(new FileOutputStream("/home/joker/bin/java_tec_test/datastream.txt"));
             for (Person person : persons) {
                 outputStream.writeUTF(person.nickname);
                 outputStream.writeInt(person.age);
             }
             outputStream.flush();
             outputStream.close();
-            inputStream = new DataInputStream(new FileInputStream("~/bin/java_tec_test/datastream.txt"));
+            inputStream = new DataInputStream(new FileInputStream("/home/joker/bin/java_tec_test/datastream.txt"));
             for (int i = 0; i < persons.length; i++) {
                 String name = inputStream.readUTF();
                 int age = inputStream.readInt();
@@ -124,14 +136,17 @@ public class ByteStreamStep {
         try {
             // 构建流集合。
             Vector<InputStream> vector = new Vector<InputStream>();
-            vector.addElement(new FileInputStream("~/bin/java_tec_test/test1.txt"));
-            vector.addElement(new FileInputStream("~/bin/java_tec_test/test2.txt"));
-            vector.addElement(new FileInputStream("~/bin/java_tec_test/test3.txt"));
+            vector.addElement(new FileInputStream("/home/joker/bin/java_tec_test/test1.txt"));
+            vector.addElement(new FileInputStream("/home/joker/bin/java_tec_test/test2.txt"));
+            vector.addElement(new FileInputStream("/home/joker/bin/java_tec_test/test3.txt"));
             Enumeration<InputStream> e = vector.elements();
 
             sis = new SequenceInputStream(e);
-
-            bos = new BufferedOutputStream(new FileOutputStream("~/bin/java_tec_test/test4.txt"));
+            File dstFile = new File("/home/joker/bin/java_tec_test/test4.txt");
+            if(!dstFile.exists()){
+                dstFile.createNewFile();
+            }
+            bos = new BufferedOutputStream(new FileOutputStream(dstFile));
             // 读写数据
             byte[] buf = new byte[1024];
             int len = 0;
@@ -173,6 +188,20 @@ public class ByteStreamStep {
         @Override
         public String toString() {
             return "Person [name = " + nickname + ",age = " + age + "]";
+        }
+    }
+
+    public void display(String filePath){
+
+        try{
+            RandomAccessFile rf = new RandomAccessFile(filePath, "r");
+            for(int i = 0; i < 7; i++){
+                System.out.println("Value " + i + ":" + rf.readDouble());
+            }
+            System.out.println(rf.readUTF());
+            rf.close();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
