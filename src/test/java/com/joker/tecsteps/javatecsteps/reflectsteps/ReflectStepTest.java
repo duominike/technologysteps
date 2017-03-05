@@ -1,15 +1,34 @@
 package com.joker.tecsteps.javatecsteps.reflectsteps;
 
+
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by liwenle on 17-2-20.
  */
 public class ReflectStepTest {
+    @Test
+    public void formatBigCount(){
+        long bigCount = 54023;
+        String result;
+        if(bigCount < 10000){
+            result = String.valueOf(bigCount);
+        }else if(bigCount < 99990000){
+            SimpleDateFormat format = new SimpleDateFormat("0.0f");
+            float  calc = (bigCount * 0.01f /10000) * 100;
+            result = format.format(calc) + "w";
+        }else {
+            result = "9999w+";
+        }
+        System.out.println("result: " + result);
+//        return result;
+    }
+
     @Test
     public  void testReflectStep(){
         try{
