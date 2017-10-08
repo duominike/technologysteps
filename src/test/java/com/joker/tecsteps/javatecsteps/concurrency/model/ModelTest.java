@@ -42,13 +42,6 @@ public class ModelTest {
     }
 
 
-    public static void main(String args[]){
-//        new Restaurant();
-//        test_await_and_signal();
-
-        testDieLock();
-    }
-
     public static  void testDieLock(){
         try{
         int ponder = 5;//当思考时间短时，死锁很快就发生，当思考时间长时，死锁可能不会发生
@@ -80,5 +73,21 @@ public class ModelTest {
             e.printStackTrace();
         }
     }
+
+//    private  volatile int number;
+//    private   volatile boolean ready = false;
+//
+//
+//    private class ReaderThread extends Thread{
+//        @Override
+//        public void run() {
+//            while (!ready){
+//                Thread.yield();
+//                System.out.println(number);
+//            }
+//        }
+//    }
+
+
 
 }
